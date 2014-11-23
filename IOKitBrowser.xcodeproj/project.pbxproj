@@ -22,7 +22,6 @@
 		AD7E3EB6186BBBBB00E47119 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AD7E3E92186BBBBB00E47119 /* Foundation.framework */; };
 		AD7E3EB7186BBBBB00E47119 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AD7E3E96186BBBBB00E47119 /* UIKit.framework */; };
 		AD7E3EBF186BBBBB00E47119 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = AD7E3EBD186BBBBB00E47119 /* InfoPlist.strings */; };
-		AD7E3EC1186BBBBB00E47119 /* IOKitTestTests.m in Sources */ = {isa = PBXBuildFile; fileRef = AD7E3EC0186BBBBB00E47119 /* IOKitTestTests.m */; };
 		AD7E3ED0186BBDCA00E47119 /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AD7E3ECF186BBDCA00E47119 /* IOKit.framework */; };
 		ADDA110718A8D511002E84F9 /* ELLIOKitDumper.m in Sources */ = {isa = PBXBuildFile; fileRef = ADDA110618A8D511002E84F9 /* ELLIOKitDumper.m */; };
 /* End PBXBuildFile section */
@@ -59,7 +58,6 @@
 		AD7E3EB4186BBBBB00E47119 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		AD7E3EBC186BBBBB00E47119 /* IOKitBrowserTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "IOKitBrowserTests-Info.plist"; sourceTree = "<group>"; };
 		AD7E3EBE186BBBBB00E47119 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		AD7E3EC0186BBBBB00E47119 /* IOKitTestTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IOKitTestTests.m; sourceTree = "<group>"; };
 		AD7E3ECF186BBDCA00E47119 /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
 		ADDA110518A8D511002E84F9 /* ELLIOKitDumper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ELLIOKitDumper.h; sourceTree = "<group>"; };
 		ADDA110618A8D511002E84F9 /* ELLIOKitDumper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ELLIOKitDumper.m; sourceTree = "<group>"; };
@@ -154,7 +152,6 @@
 		AD7E3EBA186BBBBB00E47119 /* IOKitTestTests */ = {
 			isa = PBXGroup;
 			children = (
-				AD7E3EC0186BBBBB00E47119 /* IOKitTestTests.m */,
 				AD7E3EBB186BBBBB00E47119 /* Supporting Files */,
 			);
 			path = IOKitTestTests;
@@ -298,7 +295,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AD7E3EC1186BBBBB00E47119 /* IOKitTestTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
