@@ -1,10 +1,27 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6250" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="CVx-0c-v49">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6250" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="fCx-7P-FxT">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6244"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--Navigation Controller-->
+        <scene sceneID="A5g-uC-8XS">
+            <objects>
+                <navigationController id="fCx-7P-FxT" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="EQU-La-uUR">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="CVx-0c-v49" kind="relationship" relationship="rootViewController" id="Mtw-vl-IKe"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="nnG-up-ctI" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-711" y="339"/>
+        </scene>
+        <!--Root-->
         <scene sceneID="FbI-5w-Iav">
             <objects>
                 <viewController id="CVx-0c-v49" customClass="ELLViewController" sceneMemberID="viewController">
@@ -17,10 +34,10 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="513-WX-gIR" userLabel="Trail Holder">
-                                <rect key="frame" x="0.0" y="20" width="600" height="28"/>
+                                <rect key="frame" x="0.0" y="64" width="600" height="28"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Trail" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CDW-F3-EPO">
-                                        <rect key="frame" x="20" y="5" width="560" height="18"/>
+                                        <rect key="frame" x="15" y="5" width="570" height="18"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                         <nil key="highlightedColor"/>
@@ -30,16 +47,16 @@
                                 <gestureRecognizers/>
                                 <constraints>
                                     <constraint firstItem="CDW-F3-EPO" firstAttribute="top" secondItem="513-WX-gIR" secondAttribute="top" constant="5" id="0pL-lQ-SDq"/>
-                                    <constraint firstAttribute="trailing" secondItem="CDW-F3-EPO" secondAttribute="trailing" constant="20" id="MF0-aE-PIL"/>
-                                    <constraint firstItem="CDW-F3-EPO" firstAttribute="leading" secondItem="513-WX-gIR" secondAttribute="leading" constant="20" id="MeU-o3-qTg"/>
+                                    <constraint firstAttribute="trailing" secondItem="CDW-F3-EPO" secondAttribute="trailing" constant="15" id="MF0-aE-PIL"/>
+                                    <constraint firstItem="CDW-F3-EPO" firstAttribute="leading" secondItem="513-WX-gIR" secondAttribute="leading" constant="15" id="MeU-o3-qTg"/>
                                     <constraint firstAttribute="bottom" secondItem="CDW-F3-EPO" secondAttribute="bottom" constant="5" id="zJ0-Hv-ztw"/>
                                 </constraints>
-                                <connections>
-                                    <outletCollection property="gestureRecognizers" destination="CDw-Os-T9m" appends="YES" id="mtt-cK-d40"/>
-                                </connections>
                             </view>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="O83-7R-zBE">
-                                <rect key="frame" x="0.0" y="48" width="600" height="552"/>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="hOd-ss-PFr">
+                                <rect key="frame" x="290" y="290" width="20" height="20"/>
+                            </activityIndicatorView>
+                            <tableView hidden="YES" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" keyboardDismissMode="onDrag" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="O83-7R-zBE">
+                                <rect key="frame" x="0.0" y="92" width="600" height="508"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <searchBar key="tableHeaderView" contentMode="redraw" searchBarStyle="minimal" id="pTy-ZP-m06">
                                     <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
@@ -49,6 +66,32 @@
                                         <outlet property="delegate" destination="CVx-0c-v49" id="Aaq-YX-DO3"/>
                                     </connections>
                                 </searchBar>
+                                <prototypes>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="ELLViewControllerCellPropertiesIdentifier" id="zFM-2f-kO7">
+                                        <rect key="frame" x="0.0" y="278" width="600" height="44"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="zFM-2f-kO7" id="IN2-xU-yeM">
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" tag="101" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="d3h-k4-xVw">
+                                                    <rect key="frame" x="13" y="8" width="584" height="28"/>
+                                                    <fontDescription key="fontDescription" name="CourierNewPSMT" family="Courier New" pointSize="15"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="d3h-k4-xVw" firstAttribute="leading" secondItem="IN2-xU-yeM" secondAttribute="leadingMargin" constant="5" id="GjN-gL-9fT"/>
+                                                <constraint firstItem="d3h-k4-xVw" firstAttribute="top" secondItem="IN2-xU-yeM" secondAttribute="topMargin" id="HjL-fS-hUl"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="d3h-k4-xVw" secondAttribute="bottom" constant="-0.5" id="LWQ-4G-qLd"/>
+                                                <constraint firstItem="d3h-k4-xVw" firstAttribute="trailing" secondItem="IN2-xU-yeM" secondAttribute="trailingMargin" constant="5" id="nsM-zP-pL3"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <segue destination="fCx-7P-FxT" kind="show" identifier="showChild" id="vlp-8c-dgY"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
                                 <connections>
                                     <outlet property="dataSource" destination="CVx-0c-v49" id="rdJ-2u-dNA"/>
                                     <outlet property="delegate" destination="CVx-0c-v49" id="7Us-Gx-P7N"/>
@@ -58,29 +101,28 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="O83-7R-zBE" firstAttribute="leading" secondItem="vyY-2F-OIf" secondAttribute="leading" id="1rf-8u-OuF"/>
+                            <constraint firstAttribute="centerX" secondItem="hOd-ss-PFr" secondAttribute="centerX" id="5Kp-tc-uqi"/>
                             <constraint firstAttribute="trailing" secondItem="O83-7R-zBE" secondAttribute="trailing" id="6Zc-uP-PVF"/>
                             <constraint firstItem="513-WX-gIR" firstAttribute="leading" secondItem="vyY-2F-OIf" secondAttribute="leading" id="BwC-i6-kuB"/>
                             <constraint firstAttribute="trailing" secondItem="513-WX-gIR" secondAttribute="trailing" id="KPY-Dp-EIW"/>
                             <constraint firstItem="513-WX-gIR" firstAttribute="top" secondItem="bfv-Mw-lJ6" secondAttribute="bottom" id="QrC-BB-R3V"/>
+                            <constraint firstAttribute="centerY" secondItem="hOd-ss-PFr" secondAttribute="centerY" id="rDR-Mt-SmX"/>
                             <constraint firstItem="5dh-Kh-eJK" firstAttribute="top" secondItem="O83-7R-zBE" secondAttribute="bottom" id="s3f-1C-p0n"/>
                             <constraint firstItem="O83-7R-zBE" firstAttribute="top" secondItem="513-WX-gIR" secondAttribute="bottom" id="tmZ-Kd-Rox"/>
                         </constraints>
                     </view>
+                    <navigationItem key="navigationItem" title="Root" id="WAM-rp-bvN"/>
                     <connections>
                         <outlet property="searchBar" destination="pTy-ZP-m06" id="o2W-We-AEk"/>
+                        <outlet property="spinner" destination="hOd-ss-PFr" id="ecF-E0-TjX"/>
                         <outlet property="tableView" destination="O83-7R-zBE" id="iFV-dF-56k"/>
                         <outlet property="trailHolder" destination="513-WX-gIR" id="yLA-aj-MIA"/>
                         <outlet property="trailLabel" destination="CDW-F3-EPO" id="05H-Qs-9nv"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ioh-wP-cOT" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <tapGestureRecognizer id="CDw-Os-T9m">
-                    <connections>
-                        <action selector="moveBack:" destination="CVx-0c-v49" id="6KJ-Yb-E6e"/>
-                    </connections>
-                </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="596" y="370"/>
+            <point key="canvasLocation" x="131" y="330"/>
         </scene>
     </scenes>
 </document>

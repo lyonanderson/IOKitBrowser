@@ -27,4 +27,6 @@
 
 - (void)addChild:(ELLIOKitNodeInfo *)child;
 
+- (void)searchForTerm:(NSString *)searchTerm;
+
 @end

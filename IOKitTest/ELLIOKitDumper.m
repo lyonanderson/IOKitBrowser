@@ -102,29 +102,36 @@ static void assertion(int condition, char *message) {
     CFRelease(cfBundle);
 }
 
-- (ELLIOKitNodeInfo *)dumpIOKitTree {
+- (void)dumpIOKitTreeWithCompletion:(void(^)(ELLIOKitNodeInfo *nodeInfo))completion {
     
-    mach_port_t iokitPort = 0;
-    struct options options;
-    io_registry_entry_t service = 0;
-    kern_return_t status = KERN_SUCCESS;
+     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+     
+         mach_port_t iokitPort = 0;
+         struct options options;
+         io_registry_entry_t service = 0;
+         kern_return_t status = KERN_SUCCESS;
+         
+         options.class = 0;
+         options.flags = kIORegFlagShowProperties;
+         options.name = 0;
+         options.plane = kIOServicePlane;
+         
+         status = self.IOMasterPortShim(bootstrap_port, &iokitPort);
+         assertion(status == KERN_SUCCESS, "can't obtain I/O Kit's master port");
+         
+         service = self.IORegistryGetRootEntryShim(iokitPort);
+         assertion(service, "can't obtain I/O Kit's root service");
+         
+         ELLIOKitNodeInfo *root = [self _scan:nil service:service options:options];
+         
+         self.IOObjectReleaseShim(service);
 
-    options.class = 0;
-    options.flags = kIORegFlagShowProperties;
-    options.name = 0;
-    options.plane = kIOServicePlane;
+         dispatch_async(dispatch_get_main_queue(), ^{
+             completion(root);
+         });
+         
+     });
 
-    status = self.IOMasterPortShim(bootstrap_port, &iokitPort);
-    assertion(status == KERN_SUCCESS, "can't obtain I/O Kit's master port");
-
-    service = self.IORegistryGetRootEntryShim(iokitPort);
-    assertion(service, "can't obtain I/O Kit's root service");
-
-    ELLIOKitNodeInfo *root = [self _scan:nil service:service options:options];
-
-    self.IOObjectReleaseShim(service);
-
-    return root;
 }
 
 
@@ -168,7 +175,7 @@ static void assertion(int condition, char *message) {
     CFMutableDictionaryRef properties = 0;
     kern_return_t status = KERN_SUCCESS;
 
-    status = self.IORegistryEntryGetNameInPlaneShim(service, options.plane, name);
+    self.IORegistryEntryGetNameInPlaneShim(service, options.plane, name);
    // assertion(status == KERN_SUCCESS, "can't obtain name");
 
     NSMutableArray *translatedProperties = [NSMutableArray new];

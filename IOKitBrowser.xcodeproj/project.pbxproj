@@ -7,10 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1C403B04991AEED586674FC8 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A7A6108D9D4BF48FF7AC492 /* libPods.a */; };
 		AD1DECBC1A2293BB00A39D3F /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = AD1DECBB1A2293BB00A39D3F /* LaunchScreen.xib */; };
 		AD1DECBE1A2294A900A39D3F /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AD1DECBD1A2294A900A39D3F /* Images.xcassets */; };
 		AD1DECC01A22961B00A39D3F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AD1DECBF1A22961B00A39D3F /* Main.storyboard */; };
 		AD538626186E4E4F00BC5972 /* ELLIOKitNodeInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = AD538625186E4E4F00BC5972 /* ELLIOKitNodeInfo.m */; };
+		AD5B054F1A252AB00069AF89 /* ELLIOKitViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = AD5B054E1A252AB00069AF89 /* ELLIOKitViewModel.m */; };
 		AD7E3E93186BBBBB00E47119 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AD7E3E92186BBBBB00E47119 /* Foundation.framework */; };
 		AD7E3E95186BBBBB00E47119 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AD7E3E94186BBBBB00E47119 /* CoreGraphics.framework */; };
 		AD7E3E97186BBBBB00E47119 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AD7E3E96186BBBBB00E47119 /* UIKit.framework */; };
@@ -37,11 +39,17 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		2A7A6108D9D4BF48FF7AC492 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		65C21B293814751249266EA4 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
+		87CF12F22BABAFB1E79A0104 /* Pods.adhoc.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.adhoc.xcconfig; path = "Pods/Target Support Files/Pods/Pods.adhoc.xcconfig"; sourceTree = "<group>"; };
+		97D3DEA721A392AABDDD8DB4 /* Pods.profiling.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.profiling.xcconfig; path = "Pods/Target Support Files/Pods/Pods.profiling.xcconfig"; sourceTree = "<group>"; };
 		AD1DECBB1A2293BB00A39D3F /* LaunchScreen.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LaunchScreen.xib; sourceTree = "<group>"; };
 		AD1DECBD1A2294A900A39D3F /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		AD1DECBF1A22961B00A39D3F /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		AD538624186E4E4F00BC5972 /* ELLIOKitNodeInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ELLIOKitNodeInfo.h; sourceTree = "<group>"; };
 		AD538625186E4E4F00BC5972 /* ELLIOKitNodeInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ELLIOKitNodeInfo.m; sourceTree = "<group>"; };
+		AD5B054D1A252AB00069AF89 /* ELLIOKitViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ELLIOKitViewModel.h; sourceTree = "<group>"; };
+		AD5B054E1A252AB00069AF89 /* ELLIOKitViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ELLIOKitViewModel.m; sourceTree = "<group>"; };
 		AD7E3E8F186BBBBB00E47119 /* IOKitBrowser.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = IOKitBrowser.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AD7E3E92186BBBBB00E47119 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		AD7E3E94186BBBBB00E47119 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -61,6 +69,7 @@
 		AD7E3ECF186BBDCA00E47119 /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
 		ADDA110518A8D511002E84F9 /* ELLIOKitDumper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ELLIOKitDumper.h; sourceTree = "<group>"; };
 		ADDA110618A8D511002E84F9 /* ELLIOKitDumper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ELLIOKitDumper.m; sourceTree = "<group>"; };
+		C9602A192FE4D0FA662EF037 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -72,6 +81,7 @@
 				AD7E3E95186BBBBB00E47119 /* CoreGraphics.framework in Frameworks */,
 				AD7E3E97186BBBBB00E47119 /* UIKit.framework in Frameworks */,
 				AD7E3E93186BBBBB00E47119 /* Foundation.framework in Frameworks */,
+				1C403B04991AEED586674FC8 /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -88,6 +98,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		9ED867D3500FAC137D502372 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				65C21B293814751249266EA4 /* Pods.debug.xcconfig */,
+				C9602A192FE4D0FA662EF037 /* Pods.release.xcconfig */,
+				87CF12F22BABAFB1E79A0104 /* Pods.adhoc.xcconfig */,
+				97D3DEA721A392AABDDD8DB4 /* Pods.profiling.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		AD7E3E86186BBBBB00E47119 = {
 			isa = PBXGroup;
 			children = (
@@ -95,6 +116,7 @@
 				AD7E3EBA186BBBBB00E47119 /* IOKitTestTests */,
 				AD7E3E91186BBBBB00E47119 /* Frameworks */,
 				AD7E3E90186BBBBB00E47119 /* Products */,
+				9ED867D3500FAC137D502372 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -115,6 +137,7 @@
 				AD7E3E94186BBBBB00E47119 /* CoreGraphics.framework */,
 				AD7E3E96186BBBBB00E47119 /* UIKit.framework */,
 				AD7E3EB4186BBBBB00E47119 /* XCTest.framework */,
+				2A7A6108D9D4BF48FF7AC492 /* libPods.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -130,6 +153,8 @@
 				ADDA110618A8D511002E84F9 /* ELLIOKitDumper.m */,
 				AD538624186E4E4F00BC5972 /* ELLIOKitNodeInfo.h */,
 				AD538625186E4E4F00BC5972 /* ELLIOKitNodeInfo.m */,
+				AD5B054D1A252AB00069AF89 /* ELLIOKitViewModel.h */,
+				AD5B054E1A252AB00069AF89 /* ELLIOKitViewModel.m */,
 				AD1DECBD1A2294A900A39D3F /* Images.xcassets */,
 				AD1DECBB1A2293BB00A39D3F /* LaunchScreen.xib */,
 				AD7E3E99186BBBBB00E47119 /* Supporting Files */,
@@ -173,10 +198,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = AD7E3EC4186BBBBB00E47119 /* Build configuration list for PBXNativeTarget "IOKitBrowser" */;
 			buildPhases = (
+				F8AF10792088033224D40B04 /* Check Pods Manifest.lock */,
 				AD7E3E8B186BBBBB00E47119 /* Sources */,
 				AD7E3E8C186BBBBB00E47119 /* Frameworks */,
 				AD7E3E8D186BBBBB00E47119 /* Resources */,
 				34008090A8A94093980B6DA7 /* icon versioning */,
+				6B0365F3CADD6982C222E43D /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -276,6 +303,36 @@
 			shellPath = /bin/sh;
 			shellScript = "\ncommit=`git rev-parse --short HEAD`\nbranch=`git rev-parse --abbrev-ref HEAD`\nversion=`/usr/libexec/PlistBuddy -c \"Print CFBundleVersion\" \"${INFOPLIST_FILE}\"`\n\nfunction processIcon() {\n    export PATH=$PATH:/usr/local/bin\n    base_file=$1\n    base_path=`find ${SRCROOT} -name $base_file`\n\n    if [[ ! -f ${base_path} || -z ${base_path} ]]; then\n        return;\n    fi\n\n    target_file=`echo $base_file | sed \"s/_base//\"`\n    target_path=\"${CONFIGURATION_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/${target_file}\"\n\n    if [ $CONFIGURATION = \"Release\" ]; then\n    cp ${base_file} $target_path\n    return\n    fi\n\n    width=`identify -format %w ${base_path}`\n\n    convert -background '#0008' -fill white -gravity center -size ${width}x40\\\n    caption:\"${version} ${branch} ${commit}\"\\\n    ${base_path} +swap -gravity south -composite ${target_path}\n}\n\nprocessIcon \"Icon_base.png\"\nprocessIcon \"Icon@2x_base.png\"\nprocessIcon \"Icon-72_base.png\"\nprocessIcon \"Icon-72@2x_base.png\"\n";
 		};
+		6B0365F3CADD6982C222E43D /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		F8AF10792088033224D40B04 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -286,6 +343,7 @@
 				AD538626186E4E4F00BC5972 /* ELLIOKitNodeInfo.m in Sources */,
 				AD7E3EAC186BBBBB00E47119 /* ELLViewController.m in Sources */,
 				AD7E3EA3186BBBBB00E47119 /* ELLAppDelegate.m in Sources */,
+				AD5B054F1A252AB00069AF89 /* ELLIOKitViewModel.m in Sources */,
 				ADDA110718A8D511002E84F9 /* ELLIOKitDumper.m in Sources */,
 				AD7E3E9F186BBBBB00E47119 /* main.m in Sources */,
 			);
@@ -330,8 +388,10 @@
 /* Begin XCBuildConfiguration section */
 		0AAC631A05DE4B7697873C8E /* profiling */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 97D3DEA721A392AABDDD8DB4 /* Pods.profiling.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "IOKitTest/IOKitBrowser-Prefix.pch";
 				INFOPLIST_FILE = "IOKitTest/IOKitBrowser-Info.plist";
@@ -468,8 +528,10 @@
 		};
 		254D11163F85421D922EA685 /* adhoc */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 87CF12F22BABAFB1E79A0104 /* Pods.adhoc.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "IOKitTest/IOKitBrowser-Prefix.pch";
 				INFOPLIST_FILE = "IOKitTest/IOKitBrowser-Info.plist";
@@ -628,8 +690,10 @@
 		};
 		AD7E3EC5186BBBBB00E47119 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 65C21B293814751249266EA4 /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "IOKitTest/IOKitBrowser-Prefix.pch";
 				INFOPLIST_FILE = "IOKitTest/IOKitBrowser-Info.plist";
@@ -641,8 +705,10 @@
 		};
 		AD7E3EC6186BBBBB00E47119 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = C9602A192FE4D0FA662EF037 /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "IOKitTest/IOKitBrowser-Prefix.pch";
 				INFOPLIST_FILE = "IOKitTest/IOKitBrowser-Info.plist";

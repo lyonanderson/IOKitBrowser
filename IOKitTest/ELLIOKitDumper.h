@@ -12,6 +12,6 @@
 
 @interface ELLIOKitDumper : NSObject
 
-- (ELLIOKitNodeInfo *)dumpIOKitTree;
+- (void)dumpIOKitTreeWithCompletion:(void(^)(ELLIOKitNodeInfo *nodeInfo))completion;
 
 @end

@@ -7,11 +7,18 @@
 //
 
 #import "ELLAppDelegate.h"
+#import "ELLIOKitViewModel.h"
+#import "ELLViewController.h"
 
 @implementation ELLAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    // Override point for customization after application launch.
+    UINavigationController *rootViewController = (UINavigationController *) self.window.rootViewController;
+    ELLViewController *viewController = (ELLViewController *)rootViewController.topViewController;
+
+    ELLIOKitViewModel *viewModel = [[ELLIOKitViewModel alloc] init];
+    viewController.viewModel = viewModel;
+    
     return YES;
 }
 

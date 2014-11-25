@@ -1,0 +1,153 @@
+//
+//  ELLIOKitViewModel.m
+//  IOKitBrowser
+//
+//  Created by Christopher Anderson on 25/11/2014.
+//  Copyright (c) 2014 Electric Labs. All rights reserved.
+//
+
+#import "ELLIOKitViewModel.h"
+#import "ELLIOKitNodeInfo.h"
+#import "ELLIOKitDumper.h"
+
+@interface ELLIOKitViewModel ()
+@property (nonatomic, readwrite, strong) ELLIOKitNodeInfo *nodeInfo;
+@property (nonatomic, readwrite, copy) NSString *filterTerm;
+@property (nonatomic, readwrite, assign) ELLIOKitViewModelState state;
+@property (nonatomic, readwrite, copy) NSString *title;
+@property (nonatomic, readwrite, copy) NSString *trail;
+@end
+
+@implementation ELLIOKitViewModel
+
+- (instancetype)initWithNodeInfo:(ELLIOKitNodeInfo *)nodeInfo filterTerm:(NSString *)filterTerm {
+    self = [super init];
+    if (self) {
+        self.nodeInfo = nodeInfo;
+        self.filterTerm = filterTerm;
+    }
+    return self;
+}
+
+- (void)load {
+    if (!_nodeInfo) {
+        self.state = ELLIOKitViewModelStateLoading;
+        ELLIOKitDumper *dumper = [[ELLIOKitDumper alloc] init];
+        [dumper dumpIOKitTreeWithCompletion:^(ELLIOKitNodeInfo *nodeInfo) {
+            self.nodeInfo = nodeInfo;
+            self.state = ELLIOKitViewModelStateLoaded;
+        }];
+    } else {
+        self.state = ELLIOKitViewModelStateLoaded;
+    }
+}
+
+-(void)setNodeInfo:(ELLIOKitNodeInfo *)nodeInfo {
+    if (_nodeInfo != nodeInfo) {
+        _nodeInfo = nodeInfo;
+        self.title = nodeInfo.name;
+    }
+}
+
+- (void)filterModelByTerm:(NSString *)filterTerm {
+    self.state = ELLIOKitViewModelStateSearching;
+    [self.nodeInfo searchForTerm:filterTerm];
+    self.filterTerm = filterTerm;
+    self.state = ELLIOKitViewModelStateLoaded;
+}
+
+- (ELLIOKitViewModel *) viewModelForIndexPath:(NSIndexPath *)indexPath {
+    if (indexPath.section == 1){
+        ELLIOKitNodeInfo *childNode = [self _childrenForLocation][indexPath.row];
+        ELLIOKitViewModel *childViewModel = [[ELLIOKitViewModel alloc] initWithNodeInfo:childNode filterTerm:self.filterTerm];
+        return childViewModel;
+    }
+    return  nil;
+}
+
+- (BOOL) hasChildren:(NSIndexPath *)indexPath {
+    return indexPath.section == 1;
+}
+
+- (NSAttributedString *) titleForIndexPath:(NSIndexPath *)indexPath {
+    NSString *cellText = @"";
+    if (indexPath.section == 0) {
+        cellText = [self _propertiesForLocation][indexPath.row];
+        
+    } else {
+        ELLIOKitNodeInfo *childNode = [self _childrenForLocation][indexPath.row];
+        
+        cellText = [NSString stringWithFormat:@"%@ %@", childNode.name,
+                    childNode.searchCount ? [NSString stringWithFormat:@"[%li]", (long) childNode.searchCount] : @""];
+    }
+    
+    NSMutableAttributedString *text = [[NSMutableAttributedString alloc] initWithString:cellText];
+    [self _highlightSearchTerm:self.filterTerm inText:text];
+    
+    return text;
+}
+
+- (NSString *) titleForHeaderInSection:(NSInteger)section {
+    if (section == 0) {
+        return [[self _propertiesForLocation] count] ? @"Properties" : @"";
+    } else {
+        return [[self _childrenForLocation] count] ? @"Children" : @"";
+    }
+}
+
+
+- (NSInteger) numberOfRowsInSection:(NSInteger)section {
+    if (section == 0) {
+        return [[self _propertiesForLocation] count];
+    } else {
+        return [[self _childrenForLocation] count];
+    }
+    
+}
+
+- (NSInteger)numberOfSections {
+    return 2;
+}
+
+
+#pragma mark Helpers
+
+- (NSString *) trail {
+    NSMutableArray *stack = [@[self.nodeInfo.name] mutableCopy];
+    ELLIOKitNodeInfo *node = self.nodeInfo.parent;
+    while (node != nil) {
+        [stack addObject:node.name ?: @"Root"];
+        node = node.parent;
+    }
+    
+    return [[[stack reverseObjectEnumerator] allObjects] componentsJoinedByString:@" > "];
+}
+
+- (NSArray *)_propertiesForLocation {
+    return self.filterTerm.length ? self.nodeInfo.matchingProperties : self.nodeInfo.properties;
+}
+
+- (NSArray *)_childrenForLocation {
+    return (self.filterTerm.length ? self.nodeInfo.matchedChildren : self.nodeInfo.children);
+}
+
+
+- (void)_highlightSearchTerm:(NSString *)searchTerm inText:(NSMutableAttributedString *)text {
+    if (searchTerm.length) {
+        NSDictionary *attrs = @{NSBackgroundColorAttributeName : [UIColor yellowColor]};
+        
+        NSRange range = [text.string rangeOfString:searchTerm options:NSCaseInsensitiveSearch];
+        while (range.location != NSNotFound) {
+            [text setAttributes:attrs range:range];
+            range = [text.string rangeOfString:searchTerm
+                                       options:NSCaseInsensitiveSearch
+                                         range:NSMakeRange(range.location + 1, [text length] - range.location - 1)];
+        }
+        
+    }
+}
+
+
+
+
+@end

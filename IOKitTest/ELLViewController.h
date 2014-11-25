@@ -8,6 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
+@class ELLIOKitViewModel;
+
 @interface ELLViewController : UIViewController
+
+@property (nonatomic, strong) ELLIOKitViewModel *viewModel;
 
 @end
