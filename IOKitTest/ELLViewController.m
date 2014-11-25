@@ -138,7 +138,7 @@ static NSString *kSearchTerm = @"kSearchTerm";
     UILabel *textLabel = (UILabel *)[self.sizingCell viewWithTag:101];
     textLabel.attributedText = [self.viewModel titleForIndexPath:indexPath];
     CGSize calcualtedSize = [textLabel sizeThatFits:CGSizeMake(CGRectGetWidth(tableView.bounds) - 16.0f, CGFLOAT_MAX)];
-    return MIN(300.0f, calcualtedSize.height + 30.0f);
+    return MIN(600.0f, calcualtedSize.height + 30.0f);
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -178,8 +178,13 @@ static NSString *kSearchTerm = @"kSearchTerm";
 
 - (void)_searchWithTimer:(NSTimer *)timer {
     NSString *searchTerm = timer.userInfo[kSearchTerm];
-    self.searchTerm = searchTerm;
-    [self.viewModel filterModelByTerm:searchTerm];
+    if(searchTerm.length > 1) {
+        self.searchTerm = searchTerm;
+        [self.viewModel filterModelByTerm:searchTerm];
+    } else {
+        self.searchTerm = nil;
+        [self.viewModel clearFilter];
+    }
     [_tableView reloadData];
 }
 

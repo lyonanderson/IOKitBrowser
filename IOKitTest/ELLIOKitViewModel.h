@@ -24,6 +24,7 @@ typedef NS_ENUM(NSUInteger, ELLIOKitViewModelState) {
 
 - (void)load;
 - (void)filterModelByTerm:(NSString *)filterTerm;
+- (void)clearFilter;
 
 - (ELLIOKitViewModel *) viewModelForIndexPath:(NSIndexPath *)indexPath;
 - (BOOL) hasChildren:(NSIndexPath *)indexPath;

@@ -56,6 +56,10 @@
     self.state = ELLIOKitViewModelStateLoaded;
 }
 
+- (void)clearFilter {
+    self.filterTerm = nil;
+}
+
 - (ELLIOKitViewModel *) viewModelForIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == 1){
         ELLIOKitNodeInfo *childNode = [self _childrenForLocation][indexPath.row];
