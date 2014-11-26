@@ -19,8 +19,9 @@
 @property(nonatomic, strong) IBOutlet UITableView *tableView;
 @property(nonatomic, strong) IBOutlet UIActivityIndicatorView *spinner;
 @property(nonatomic, strong) IBOutlet UISearchBar *searchBar;
-@property(nonatomic, strong) IBOutlet UILabel *trailLabel;
+@property(nonatomic, strong) IBOutlet UITextView *trailLabel;
 @property(nonatomic, strong) IBOutlet UIView *trailHolder;
+@property(nonatomic, strong) IBOutlet NSLayoutConstraint *textHeightConstraint;
 
 @property (nonatomic, strong) UITableViewCell *sizingCell;
 
@@ -47,6 +48,7 @@ static NSString *kSearchTerm = @"kSearchTerm";
                                                  name:UIKeyboardWillHideNotification object:nil];
     self.KVOController = [[FBKVOController alloc] initWithObserver:self];
 
+
 }
 
 
@@ -60,10 +62,12 @@ static NSString *kSearchTerm = @"kSearchTerm";
     [self.viewModel load];
 }
 
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.sizingCell = [self.tableView dequeueReusableCellWithIdentifier:@"ELLViewControllerCellPropertiesIdentifier"];
 }
+
 
 - (void)setViewModel:(ELLIOKitViewModel *)viewModel {
     if (viewModel != _viewModel) {
@@ -81,7 +85,12 @@ static NSString *kSearchTerm = @"kSearchTerm";
                     
                     self.title = self.viewModel.title;
                     self.searchBar.text = self.viewModel.filterTerm;
-                    self.trailLabel.text = self.viewModel.trail;
+                    
+                    self.trailLabel.attributedText = self.viewModel.trail;
+                   
+                    CGSize sizeThatShouldFitTheContent = [_trailLabel sizeThatFits:CGSizeMake(CGRectGetWidth(self.view.bounds), CGFLOAT_MAX)];
+                    self.textHeightConstraint.constant = sizeThatShouldFitTheContent.height;
+
                 }
                     break;
                 case ELLIOKitViewModelStateSearching:{
@@ -149,8 +158,7 @@ static NSString *kSearchTerm = @"kSearchTerm";
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if ([[segue identifier] isEqualToString:@"showChild"]) {
-        UINavigationController *navigationController = segue.destinationViewController;
-        ELLViewController *viewController = navigationController.viewControllers[0];
+        ELLViewController *viewController = segue.destinationViewController;
         
         NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
         ELLIOKitViewModel *viewModel = [self.viewModel viewModelForIndexPath:indexPath];
@@ -205,4 +213,33 @@ static NSString *kSearchTerm = @"kSearchTerm";
     _tableView.contentInset = contentInsets;
     _tableView.scrollIndicatorInsets = contentInsets;
 }
+
+#pragma mark
+- (IBAction)textTapped:(UITapGestureRecognizer *)recognizer {
+    UITextView *textView = (UITextView *)recognizer.view;
+    
+    
+    NSLayoutManager *layoutManager = textView.layoutManager;
+    CGPoint location = [recognizer locationInView:textView];
+    location.x -= textView.textContainerInset.left;
+    location.y -= textView.textContainerInset.top;
+    
+    // Find the character that's been tapped on
+    
+    NSUInteger characterIndex;
+    characterIndex = [layoutManager characterIndexForPoint:location
+                                           inTextContainer:textView.textContainer
+                  fractionOfDistanceBetweenInsertionPoints:NULL];
+    
+    if (characterIndex < textView.textStorage.length) {
+        
+        NSRange range;
+        NSNumber *index = [self.viewModel.trail attribute:kDepthAttribute atIndex:characterIndex effectiveRange:&range];
+    
+        NSArray *viewControllers = self.navigationController.viewControllers;
+        [self.navigationController popToViewController:viewControllers[index.integerValue] animated:YES];
+        
+    }
+}
+
 @end

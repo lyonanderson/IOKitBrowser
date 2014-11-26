@@ -33,30 +33,11 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="513-WX-gIR" userLabel="Trail Holder">
-                                <rect key="frame" x="0.0" y="64" width="600" height="28"/>
-                                <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" " lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CDW-F3-EPO">
-                                        <rect key="frame" x="15" y="5" width="570" height="18"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                </subviews>
-                                <color key="backgroundColor" red="0.90588235294117647" green="0.90588235294117647" blue="0.90588235294117647" alpha="1" colorSpace="calibratedRGB"/>
-                                <gestureRecognizers/>
-                                <constraints>
-                                    <constraint firstItem="CDW-F3-EPO" firstAttribute="top" secondItem="513-WX-gIR" secondAttribute="top" constant="5" id="0pL-lQ-SDq"/>
-                                    <constraint firstAttribute="trailing" secondItem="CDW-F3-EPO" secondAttribute="trailing" constant="15" id="MF0-aE-PIL"/>
-                                    <constraint firstItem="CDW-F3-EPO" firstAttribute="leading" secondItem="513-WX-gIR" secondAttribute="leading" constant="15" id="MeU-o3-qTg"/>
-                                    <constraint firstAttribute="bottom" secondItem="CDW-F3-EPO" secondAttribute="bottom" constant="5" id="zJ0-Hv-ztw"/>
-                                </constraints>
-                            </view>
                             <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="hOd-ss-PFr">
                                 <rect key="frame" x="290" y="290" width="20" height="20"/>
                             </activityIndicatorView>
                             <tableView hidden="YES" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" keyboardDismissMode="onDrag" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="O83-7R-zBE">
-                                <rect key="frame" x="0.0" y="92" width="600" height="508"/>
+                                <rect key="frame" x="0.0" y="99" width="600" height="501"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <searchBar key="tableHeaderView" contentMode="redraw" searchBarStyle="minimal" id="pTy-ZP-m06">
                                     <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
@@ -88,7 +69,7 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <segue destination="fCx-7P-FxT" kind="show" identifier="showChild" id="vlp-8c-dgY"/>
+                                            <segue destination="CVx-0c-v49" kind="show" identifier="showChild" id="W50-ie-w29"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -97,18 +78,32 @@
                                     <outlet property="delegate" destination="CVx-0c-v49" id="7Us-Gx-P7N"/>
                                 </connections>
                             </tableView>
+                            <textView multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" editable="NO" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vFn-Ch-gb8">
+                                <rect key="frame" x="0.0" y="66" width="600" height="33"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <gestureRecognizers/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="33" id="Xiq-og-5r4"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                <connections>
+                                    <outlet property="delegate" destination="CVx-0c-v49" id="6be-oK-WQc"/>
+                                    <outletCollection property="gestureRecognizers" destination="jxT-aa-QBa" appends="YES" id="Np7-e3-QHw"/>
+                                </connections>
+                            </textView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="O83-7R-zBE" firstAttribute="leading" secondItem="vyY-2F-OIf" secondAttribute="leading" id="1rf-8u-OuF"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="vFn-Ch-gb8" secondAttribute="trailing" constant="-16" id="4GA-Qs-683"/>
                             <constraint firstAttribute="centerX" secondItem="hOd-ss-PFr" secondAttribute="centerX" id="5Kp-tc-uqi"/>
-                            <constraint firstAttribute="trailing" secondItem="O83-7R-zBE" secondAttribute="trailing" id="6Zc-uP-PVF"/>
-                            <constraint firstItem="513-WX-gIR" firstAttribute="leading" secondItem="vyY-2F-OIf" secondAttribute="leading" id="BwC-i6-kuB"/>
-                            <constraint firstAttribute="trailing" secondItem="513-WX-gIR" secondAttribute="trailing" id="KPY-Dp-EIW"/>
-                            <constraint firstItem="513-WX-gIR" firstAttribute="top" secondItem="bfv-Mw-lJ6" secondAttribute="bottom" id="QrC-BB-R3V"/>
+                            <constraint firstItem="vFn-Ch-gb8" firstAttribute="leading" secondItem="vyY-2F-OIf" secondAttribute="leadingMargin" constant="-16" id="GmW-C0-7FL"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="O83-7R-zBE" secondAttribute="trailing" constant="-16" id="XFI-qK-qb6"/>
+                            <constraint firstItem="vFn-Ch-gb8" firstAttribute="top" secondItem="bfv-Mw-lJ6" secondAttribute="bottom" constant="2" id="cPQ-5o-xz3"/>
+                            <constraint firstItem="5dh-Kh-eJK" firstAttribute="top" secondItem="O83-7R-zBE" secondAttribute="bottom" id="guw-2H-Vhg"/>
+                            <constraint firstItem="O83-7R-zBE" firstAttribute="leading" secondItem="vyY-2F-OIf" secondAttribute="leadingMargin" constant="-16" id="iuK-71-dhr"/>
+                            <constraint firstItem="O83-7R-zBE" firstAttribute="top" secondItem="vFn-Ch-gb8" secondAttribute="bottom" id="osx-lT-Liy"/>
                             <constraint firstAttribute="centerY" secondItem="hOd-ss-PFr" secondAttribute="centerY" id="rDR-Mt-SmX"/>
-                            <constraint firstItem="5dh-Kh-eJK" firstAttribute="top" secondItem="O83-7R-zBE" secondAttribute="bottom" id="s3f-1C-p0n"/>
-                            <constraint firstItem="O83-7R-zBE" firstAttribute="top" secondItem="513-WX-gIR" secondAttribute="bottom" id="tmZ-Kd-Rox"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Root" id="WAM-rp-bvN"/>
@@ -116,13 +111,21 @@
                         <outlet property="searchBar" destination="pTy-ZP-m06" id="o2W-We-AEk"/>
                         <outlet property="spinner" destination="hOd-ss-PFr" id="ecF-E0-TjX"/>
                         <outlet property="tableView" destination="O83-7R-zBE" id="iFV-dF-56k"/>
-                        <outlet property="trailHolder" destination="513-WX-gIR" id="yLA-aj-MIA"/>
-                        <outlet property="trailLabel" destination="CDW-F3-EPO" id="05H-Qs-9nv"/>
+                        <outlet property="textHeightConstraint" destination="Xiq-og-5r4" id="WTB-SJ-2nq"/>
+                        <outlet property="trailLabel" destination="vFn-Ch-gb8" id="Xds-Yb-k2H"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ioh-wP-cOT" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="jxT-aa-QBa">
+                    <connections>
+                        <action selector="textTapped:" destination="CVx-0c-v49" id="2bZ-tP-mwy"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="131" y="330"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="Mtw-vl-IKe"/>
+    </inferredMetricsTieBreakers>
 </document>

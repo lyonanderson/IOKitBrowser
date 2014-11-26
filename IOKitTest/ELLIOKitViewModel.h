@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
+extern NSString * const kDepthAttribute;
 
 typedef NS_ENUM(NSUInteger, ELLIOKitViewModelState) {
     ELLIOKitViewModelStateLoading,
@@ -20,7 +21,7 @@ typedef NS_ENUM(NSUInteger, ELLIOKitViewModelState) {
 @property (nonatomic, readonly, assign) ELLIOKitViewModelState state;
 @property (nonatomic, readonly, copy) NSString *filterTerm;
 @property (nonatomic, readonly, copy) NSString *title;
-@property (nonatomic, readonly, copy) NSString *trail;
+@property (nonatomic, readonly, copy) NSAttributedString *trail;
 
 - (void)load;
 - (void)filterModelByTerm:(NSString *)filterTerm;

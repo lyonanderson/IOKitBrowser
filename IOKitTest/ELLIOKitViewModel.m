@@ -10,15 +10,19 @@
 #import "ELLIOKitNodeInfo.h"
 #import "ELLIOKitDumper.h"
 
+#define RGBCOLOR(r,g,b) [UIColor colorWithRed:(r)/255.0f green:(g)/255.0f blue:(b)/255.0f alpha:1]
+
 @interface ELLIOKitViewModel ()
 @property (nonatomic, readwrite, strong) ELLIOKitNodeInfo *nodeInfo;
 @property (nonatomic, readwrite, copy) NSString *filterTerm;
 @property (nonatomic, readwrite, assign) ELLIOKitViewModelState state;
 @property (nonatomic, readwrite, copy) NSString *title;
-@property (nonatomic, readwrite, copy) NSString *trail;
+@property (nonatomic, readwrite, copy) NSAttributedString *trail;
 @end
 
 @implementation ELLIOKitViewModel
+
+NSString * const kDepthAttribute = @"kDepthAttribute";
 
 - (instancetype)initWithNodeInfo:(ELLIOKitNodeInfo *)nodeInfo filterTerm:(NSString *)filterTerm {
     self = [super init];
@@ -82,7 +86,7 @@
         ELLIOKitNodeInfo *childNode = [self _childrenForLocation][indexPath.row];
         
         cellText = [NSString stringWithFormat:@"%@ %@", childNode.name,
-                    childNode.searchCount ? [NSString stringWithFormat:@"[%li]", (long) childNode.searchCount] : @""];
+                    childNode.searchCount && _filterTerm.length ? [NSString stringWithFormat:@"[%li]", (long) childNode.searchCount] : @""];
     }
     
     NSMutableAttributedString *text = [[NSMutableAttributedString alloc] initWithString:cellText];
@@ -116,7 +120,9 @@
 
 #pragma mark Helpers
 
-- (NSString *) trail {
+- (NSAttributedString *) trail {
+
+    
     NSMutableArray *stack = [@[self.nodeInfo.name] mutableCopy];
     ELLIOKitNodeInfo *node = self.nodeInfo.parent;
     while (node != nil) {
@@ -124,7 +130,27 @@
         node = node.parent;
     }
     
-    return [[[stack reverseObjectEnumerator] allObjects] componentsJoinedByString:@" > "];
+    NSArray *reversedStack = [[stack reverseObjectEnumerator] allObjects];
+    
+    NSMutableAttributedString *trail = [[NSMutableAttributedString alloc] init];
+    [reversedStack enumerateObjectsUsingBlock:^(NSString *element, NSUInteger idx, BOOL *stop) {
+        NSAttributedString *trailElement = [[NSAttributedString alloc] initWithString:element
+                                                                           attributes:@{ kDepthAttribute: @(idx),
+                                                                                         NSFontAttributeName : [UIFont systemFontOfSize:14.0] }];
+        [trail appendAttributedString:trailElement];
+        if (idx < reversedStack.count - 1) {
+            NSAttributedString *chevron = [[NSAttributedString alloc] initWithString:@" → "];
+            [trail appendAttributedString:chevron];
+
+        }
+    }];
+    
+    NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
+    paragraphStyle.lineHeightMultiple = 1.2;
+    
+    [trail addAttributes:@{NSParagraphStyleAttributeName : paragraphStyle} range:NSMakeRange(0, trail.length)];
+    
+    return trail;
 }
 
 - (NSArray *)_propertiesForLocation {
