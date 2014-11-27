@@ -146,7 +146,7 @@ NSString * const kDepthAttribute = @"kDepthAttribute";
     }];
     
     NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
-    paragraphStyle.lineHeightMultiple = 1.2;
+    paragraphStyle.lineHeightMultiple = 1.2f;
     
     [trail addAttributes:@{NSParagraphStyleAttributeName : paragraphStyle} range:NSMakeRange(0, trail.length)];
     
