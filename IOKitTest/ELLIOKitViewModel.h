@@ -24,6 +24,7 @@ typedef NS_ENUM(NSUInteger, ELLIOKitViewModelState) {
 @property (nonatomic, readonly, copy) NSAttributedString *trail;
 
 - (void)load;
+- (void)refresh;
 - (void)filterModelByTerm:(NSString *)filterTerm;
 - (void)clearFilter;
 

@@ -46,6 +46,11 @@ NSString * const kDepthAttribute = @"kDepthAttribute";
     }
 }
 
+- (void)refresh {
+    self.nodeInfo = nil;
+    [self load];
+}
+
 -(void)setNodeInfo:(ELLIOKitNodeInfo *)nodeInfo {
     if (_nodeInfo != nodeInfo) {
         _nodeInfo = nodeInfo;

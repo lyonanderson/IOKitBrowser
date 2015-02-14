@@ -35,6 +35,8 @@
 @property(nonatomic, strong) NSMutableArray *trailStack;
 @property(nonatomic, strong) NSMutableArray *offsetStack;
 
+@property (nonatomic, strong) UIBarButtonItem *refreshButton;
+
 @property(nonatomic, copy) NSString *searchTerm;
 
 @property(nonatomic, strong) NSTimer *searchDelayTimer;
@@ -75,6 +77,8 @@ static NSString *kSearchTerm = @"kSearchTerm";
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.sizingCell = [self.tableView dequeueReusableCellWithIdentifier:@"ELLViewControllerCellPropertiesIdentifier"];
+    self.refreshButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(refresh:)];
+    self.navigationItem.rightBarButtonItem = self.refreshButton;
 }
 
 
@@ -92,6 +96,8 @@ static NSString *kSearchTerm = @"kSearchTerm";
                     [self.spinner stopAnimating];
                     [self.tableView reloadData];
                     
+                    self.refreshButton.enabled = YES;
+                    
                     self.title = self.viewModel.title;
                     self.searchBar.text = self.viewModel.filterTerm;
                     
@@ -108,6 +114,7 @@ static NSString *kSearchTerm = @"kSearchTerm";
                     break;
                 case ELLIOKitViewModelStateLoading: {
                     self.tableView.hidden = YES;
+                    self.refreshButton.enabled = NO;
                     [self.spinner startAnimating];
                 }
                     break;
@@ -119,6 +126,9 @@ static NSString *kSearchTerm = @"kSearchTerm";
     }
 }
 
+- (void)refresh:(id)sender {
+    [self.viewModel refresh];
+}
 
 
 #pragma mark UITableViewDataSource
