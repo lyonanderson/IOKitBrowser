@@ -128,7 +128,7 @@ NSString * const kDepthAttribute = @"kDepthAttribute";
 - (NSAttributedString *) trail {
 
     
-    NSMutableArray *stack = [@[self.nodeInfo.name] mutableCopy];
+    NSMutableArray *stack = [@[self.nodeInfo.name ?: @"<NO NAME>"] mutableCopy];
     ELLIOKitNodeInfo *node = self.nodeInfo.parent;
     while (node != nil) {
         [stack addObject:node.name ?: @"Root"];
