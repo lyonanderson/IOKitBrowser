@@ -12,6 +12,13 @@
 #import "ELLIOKitViewModel.h"
 #import <KVOController/FBKVOController.h>
 
+@interface ELLCopyMenuItem : UIMenuItem
+@property (nonatomic, strong) NSString *IOKitText;
+@end
+
+@implementation ELLCopyMenuItem
+@end
+
 @interface ELLViewController () <UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate>
 @property(nonatomic, strong) ELLIOKitNodeInfo *root;
 @property(nonatomic, strong) ELLIOKitNodeInfo *locationInTree;
@@ -32,6 +39,8 @@
 
 @property(nonatomic, strong) NSTimer *searchDelayTimer;
 @property(nonatomic, strong) FBKVOController *KVOController;
+@property(nonatomic, assign) BOOL menuVisible;
+
 @end
 
 @implementation ELLViewController
@@ -151,6 +160,26 @@ static NSString *kSearchTerm = @"kSearchTerm";
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (![self.viewModel hasChildren:indexPath]) {
+        UIMenuController *menuController = [UIMenuController sharedMenuController];
+        
+        if (self.menuVisible) {
+            [self resignFirstResponder];
+            [menuController setMenuVisible:NO animated:YES];
+            self.menuVisible = NO;
+        } else {
+            [self becomeFirstResponder];
+            NSString *IOKitTextForRow = [self.viewModel titleForIndexPath:indexPath].string;
+            ELLCopyMenuItem *copyMenuItem = [[ELLCopyMenuItem alloc] initWithTitle:@"Copy" action:@selector(copyMenuButtonPressed:)];
+            copyMenuItem.IOKitText = IOKitTextForRow;
+            menuController.menuItems = @[copyMenuItem];
+            [menuController setTargetRect:[self.tableView rectForRowAtIndexPath:indexPath] inView:self.tableView];
+            [menuController setMenuVisible:YES animated:YES];
+            self.menuVisible = YES;
+        }
+
+    }
+    
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
@@ -194,6 +223,20 @@ static NSString *kSearchTerm = @"kSearchTerm";
         [self.viewModel clearFilter];
     }
     [_tableView reloadData];
+}
+
+#pragma mark
+
+- (BOOL)canBecomeFirstResponder {
+    return YES;
+}
+
+- (void)copyMenuButtonPressed:(UIMenuController *)menuController {
+    [self resignFirstResponder];
+    ELLCopyMenuItem *copyMenuItem = [menuController menuItems][0];
+    if (copyMenuItem.IOKitText.length) {
+        [UIPasteboard generalPasteboard].string = copyMenuItem.IOKitText;
+    }
 }
 
 #pragma mark Keyboard
