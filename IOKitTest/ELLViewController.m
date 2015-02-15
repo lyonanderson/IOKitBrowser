@@ -88,34 +88,36 @@ static NSString *kSearchTerm = @"kSearchTerm";
         
         [self.KVOController observe:viewModel keyPath:@"state" options:NSKeyValueObservingOptionInitial | NSKeyValueObservingOptionNew block:^(ELLViewController *observer, ELLIOKitViewModel *model, NSDictionary *change) {
             
-            self.title = model.title;
+            observer.title = model.title;
             
             switch (model.state) {
                 case ELLIOKitViewModelStateLoaded: {
-                    self.tableView.hidden = NO;
-                    [self.spinner stopAnimating];
-                    [self.tableView reloadData];
+                    observer.tableView.hidden = NO;
+                    [observer.spinner stopAnimating];
+                    [observer.tableView reloadData];
                     
-                    self.refreshButton.enabled = YES;
+                    observer.refreshButton.enabled = YES;
                     
-                    self.title = self.viewModel.title;
-                    self.searchBar.text = self.viewModel.filterTerm;
+                    observer.title = observer.viewModel.title;
+                    observer.searchBar.text = observer.viewModel.filterTerm;
                     
-                    self.trailLabel.attributedText = self.viewModel.trail;
+                    observer.trailLabel.hidden = NO;
+                    observer.trailLabel.attributedText = observer.viewModel.trail;
                    
-                    CGSize sizeThatShouldFitTheContent = [_trailLabel sizeThatFits:CGSizeMake(CGRectGetWidth(self.view.bounds), CGFLOAT_MAX)];
-                    self.textHeightConstraint.constant = sizeThatShouldFitTheContent.height;
+                    CGSize sizeThatShouldFitTheContent = [observer.trailLabel sizeThatFits:CGSizeMake(CGRectGetWidth(observer.view.bounds), CGFLOAT_MAX)];
+                    observer.textHeightConstraint.constant = sizeThatShouldFitTheContent.height;
 
                 }
                     break;
                 case ELLIOKitViewModelStateSearching:{
-                    [self.spinner startAnimating];
+                    [observer.spinner startAnimating];
                 }
                     break;
                 case ELLIOKitViewModelStateLoading: {
-                    self.tableView.hidden = YES;
-                    self.refreshButton.enabled = NO;
-                    [self.spinner startAnimating];
+                    observer.tableView.hidden = YES;
+                    observer.refreshButton.enabled = NO;
+                    observer.trailLabel.hidden = YES;
+                    [observer.spinner startAnimating];
                 }
                     break;
                 default:

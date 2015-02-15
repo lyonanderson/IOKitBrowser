@@ -67,6 +67,7 @@
 		AD7E3EBC186BBBBB00E47119 /* IOKitBrowserTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "IOKitBrowserTests-Info.plist"; sourceTree = "<group>"; };
 		AD7E3EBE186BBBBB00E47119 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		AD7E3ECF186BBDCA00E47119 /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
+		AD9D18151A8FBBF9001E9193 /* IOKitDefines.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IOKitDefines.h; sourceTree = "<group>"; };
 		ADDA110518A8D511002E84F9 /* ELLIOKitDumper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ELLIOKitDumper.h; sourceTree = "<group>"; };
 		ADDA110618A8D511002E84F9 /* ELLIOKitDumper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ELLIOKitDumper.m; sourceTree = "<group>"; };
 		C9602A192FE4D0FA662EF037 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
@@ -159,6 +160,7 @@
 				AD1DECBB1A2293BB00A39D3F /* LaunchScreen.xib */,
 				AD7E3E99186BBBBB00E47119 /* Supporting Files */,
 				AD1DECBF1A22961B00A39D3F /* Main.storyboard */,
+				AD9D18151A8FBBF9001E9193 /* IOKitDefines.h */,
 			);
 			path = IOKitTest;
 			sourceTree = "<group>";

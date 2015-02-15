@@ -12,39 +12,12 @@
 #import "ELLIOKitNodeInfo.h"
 
 
-#define kIOServicePlane    "IOService"
-
-typedef mach_port_t io_object_t;
-typedef io_object_t io_registry_entry_t;
-typedef io_object_t io_iterator_t;
-typedef char io_name_t[128];
-typedef UInt32 IOOptionBits;
-
-typedef io_object_t (* IOIteratorNextShim)(io_iterator_t iterator);
-
-typedef kern_return_t (* IOObjectReleaseShim)(io_object_t object);
-
-typedef kern_return_t (* IORegistryEntryGetNameInPlaneShim)(io_registry_entry_t entry,
-        const io_name_t plane,
-        io_name_t name);
-
-typedef kern_return_t (* IOMasterPortShim)(mach_port_t bootstrapPort,  mach_port_t *masterPort);
-
-typedef io_registry_entry_t (*IORegistryGetRootEntryShim)(mach_port_t);
-
-typedef kern_return_t (* IORegistryEntryCreateCFPropertiesShim)(io_registry_entry_t entry,
-        CFMutableDictionaryRef *properties,
-        CFAllocatorRef allocator,
-        IOOptionBits options);
-
-
-typedef boolean_t (* IOObjectConformsToShim)(io_object_t object,
-        const io_name_t className);
-
-
-typedef kern_return_t (* IORegistryEntryGetChildIteratorShim)(io_registry_entry_t entry,
-        const io_name_t plane,
-        io_iterator_t *iterator);
+static void assertion(int condition, char *message) {
+    if (condition == 0) {
+        fprintf(stderr, "ioreg: error: %s.\n", message);
+        exit(1);
+    }
+}
 
 const UInt32 kIORegFlagShowProperties = (1 << 1);
 
@@ -55,18 +28,13 @@ struct options {
     char *plane;
 };
 
-static void assertion(int condition, char *message) {
-    if (condition == 0) {
-        fprintf(stderr, "ioreg: error: %s.\n", message);
-        exit(1);
-    }
-}
 
 @interface ELLIOKitDumper  ()
 @property (nonatomic, assign) IORegistryGetRootEntryShim IORegistryGetRootEntryShim;
 @property (nonatomic, assign) IOMasterPortShim IOMasterPortShim;
 @property (nonatomic, assign) IORegistryEntryGetNameInPlaneShim IORegistryEntryGetNameInPlaneShim;
 @property (nonatomic, assign) IOObjectReleaseShim IOObjectReleaseShim;
+@property (nonatomic, assign) IOObjectRetainShim IOObjectRetainShim;
 @property (nonatomic, assign) IOIteratorNextShim IOIteratorNextShim;
 @property (nonatomic, assign) IORegistryEntryCreateCFPropertiesShim IORegistryEntryCreateCFPropertiesShim;
 @property (nonatomic, assign) IOObjectConformsToShim IOObjectConformsToShim;
@@ -85,6 +53,14 @@ static void assertion(int condition, char *message) {
     return self;
 }
 
++ (instancetype)sharedInstance {
+    static dispatch_once_t pred;
+    static ELLIOKitDumper *service = nil;
+    dispatch_once(&pred, ^{ service = [[self alloc] init]; });
+    return service;
+}
+
+
 - (void)_prepFuncs {
     NSString *bundlePath = [[NSBundle bundleWithPath:@"/System/Library/Frameworks/IOKit.framework"] bundlePath];
     NSURL *bundleURL = [NSURL fileURLWithPath:bundlePath];
@@ -94,6 +70,7 @@ static void assertion(int condition, char *message) {
     self.IOMasterPortShim = CFBundleGetFunctionPointerForName(cfBundle, CFSTR("IOMasterPort"));
     self.IORegistryEntryGetNameInPlaneShim = CFBundleGetFunctionPointerForName(cfBundle, CFSTR("IORegistryEntryGetNameInPlane"));
     self.IOObjectReleaseShim = CFBundleGetFunctionPointerForName(cfBundle, CFSTR("IOObjectRelease"));
+    self.IOObjectRetainShim = CFBundleGetFunctionPointerForName(cfBundle, CFSTR("IOObjectRetain"));
     self.IOIteratorNextShim = CFBundleGetFunctionPointerForName(cfBundle, CFSTR("IOIteratorNext"));
     self.IORegistryEntryCreateCFPropertiesShim = CFBundleGetFunctionPointerForName(cfBundle, CFSTR("IORegistryEntryCreateCFProperties"));
     self.IOObjectConformsToShim = CFBundleGetFunctionPointerForName(cfBundle, CFSTR("IOObjectConformsTo"));
@@ -102,7 +79,7 @@ static void assertion(int condition, char *message) {
     CFRelease(cfBundle);
 }
 
-- (void)dumpIOKitTreeWithCompletion:(void(^)(ELLIOKitNodeInfo *nodeInfo))completion {
+- (void)dumpIOKitTreeFromNode:(ELLIOKitNodeInfo *)fromNode completion:(void(^)(ELLIOKitNodeInfo *nodeInfo))completion {
     
      dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
      
@@ -119,13 +96,17 @@ static void assertion(int condition, char *message) {
          status = self.IOMasterPortShim(bootstrap_port, &iokitPort);
          assertion(status == KERN_SUCCESS, "can't obtain I/O Kit's master port");
          
-         service = self.IORegistryGetRootEntryShim(iokitPort);
+         
+         if (fromNode == nil) {
+             service = self.IORegistryGetRootEntryShim(iokitPort);
+         } else {
+             service = fromNode.service;
+         }
+         
          assertion(service, "can't obtain I/O Kit's root service");
          
-         ELLIOKitNodeInfo *root = [self _scan:nil service:service options:options];
+         ELLIOKitNodeInfo *root = [self _scan:fromNode.parent service:service options:options];
          
-         self.IOObjectReleaseShim(service);
-
          dispatch_async(dispatch_get_main_queue(), ^{
              completion(root);
          });
@@ -160,7 +141,6 @@ static void assertion(int condition, char *message) {
 
         [node addChild:childNode];
 
-        self.IOObjectReleaseShim(child);
     }
 
     self.IOObjectReleaseShim(children);
@@ -170,13 +150,20 @@ static void assertion(int condition, char *message) {
 
 }
 
+- (void)releaseIOKitService:(io_registry_entry_t)service {
+    self.IOObjectReleaseShim(service);
+}
+
+- (void)retainIOKitService:(io_registry_entry_t)service {
+    self.IOObjectRetainShim(service);
+}
+
 - (ELLIOKitNodeInfo *)_showService:(io_registry_entry_t)service parent:(ELLIOKitNodeInfo *)parent options:(struct options)options {
     io_name_t name;
     CFMutableDictionaryRef properties = 0;
     kern_return_t status = KERN_SUCCESS;
 
     self.IORegistryEntryGetNameInPlaneShim(service, options.plane, name);
-   // assertion(status == KERN_SUCCESS, "can't obtain name");
 
     NSMutableArray *translatedProperties = [NSMutableArray new];
 
@@ -198,14 +185,13 @@ static void assertion(int condition, char *message) {
                 kNilOptions);
 
         assertion(status == KERN_SUCCESS, "can't obtain properties");
-       // assertion(CFGetTypeID(properties) == CFDictionaryGetTypeID(), NULL);
 
         CFDictionaryApplyFunction(properties, CFDictionaryShow_Applier, (__bridge void *) (translatedProperties));
 
         CFRelease(properties);
     }
 
-    return [[ELLIOKitNodeInfo alloc] initWithParent:parent nodeInfoWithInfo:[NSString stringWithCString:name encoding:NSUTF8StringEncoding] properties:translatedProperties];
+    return [[ELLIOKitNodeInfo alloc] initWithParent:parent service:service nodeInfoWithInfo:[NSString stringWithCString:name encoding:NSUTF8StringEncoding] properties:translatedProperties];
 
 
 }

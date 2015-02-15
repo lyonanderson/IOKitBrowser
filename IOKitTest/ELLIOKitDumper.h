@@ -7,11 +7,15 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "IOKitDefines.h"
 
 @class ELLIOKitNodeInfo;
 
 @interface ELLIOKitDumper : NSObject
 
-- (void)dumpIOKitTreeWithCompletion:(void(^)(ELLIOKitNodeInfo *nodeInfo))completion;
++ (instancetype)sharedInstance;
+- (void)dumpIOKitTreeFromNode:(ELLIOKitNodeInfo *)fromNode completion:(void(^)(ELLIOKitNodeInfo *nodeInfo))completion;
+- (void)releaseIOKitService:(io_registry_entry_t)service;
+- (void)retainIOKitService:(io_registry_entry_t)service;
 
 @end

@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "IOKitDefines.h"
 
 @interface ELLIOKitNodeInfo : NSObject
 
@@ -16,6 +17,7 @@
 
 @property(nonatomic, strong) NSString *name;
 @property(nonatomic, strong) NSArray *properties;
+@property(nonatomic, assign) io_registry_entry_t service;
 
 
 @property(nonatomic, assign) NSInteger searchCount;
@@ -23,9 +25,10 @@
 @property(nonatomic, strong) NSArray *matchedChildren;
 
 
-- (id)initWithParent:(ELLIOKitNodeInfo *)parent nodeInfoWithInfo:(NSString *)info properties:(NSArray *)properties;
+- (id)initWithParent:(ELLIOKitNodeInfo *)parent service:(io_registry_entry_t)service nodeInfoWithInfo:(NSString *)info properties:(NSArray *)properties;
 
 - (void)addChild:(ELLIOKitNodeInfo *)child;
+- (void)replaceChild:(ELLIOKitNodeInfo *)child withChild:(ELLIOKitNodeInfo *)replacementChild;
 
 - (void)searchForTerm:(NSString *)searchTerm;
 

@@ -33,26 +33,34 @@ NSString * const kDepthAttribute = @"kDepthAttribute";
     return self;
 }
 
+
 - (void)load {
     if (!_nodeInfo) {
-        self.state = ELLIOKitViewModelStateLoading;
-        ELLIOKitDumper *dumper = [[ELLIOKitDumper alloc] init];
-        [dumper dumpIOKitTreeWithCompletion:^(ELLIOKitNodeInfo *nodeInfo) {
-            self.nodeInfo = nodeInfo;
-            self.state = ELLIOKitViewModelStateLoaded;
-        }];
+        [self _load];
     } else {
         self.state = ELLIOKitViewModelStateLoaded;
     }
 }
 
 - (void)refresh {
-    self.nodeInfo = nil;
-    [self load];
+    [self _load];
+}
+
+- (void)_load {
+    self.state = ELLIOKitViewModelStateLoading;
+    ELLIOKitDumper *dumper = [ELLIOKitDumper sharedInstance];
+    [dumper dumpIOKitTreeFromNode:self.nodeInfo completion:^(ELLIOKitNodeInfo *nodeInfo) {
+        self.nodeInfo = nodeInfo;
+        if (self.filterTerm.length) {
+            [self.nodeInfo searchForTerm:self.filterTerm];
+        }
+        self.state = ELLIOKitViewModelStateLoaded;
+    }];
 }
 
 -(void)setNodeInfo:(ELLIOKitNodeInfo *)nodeInfo {
     if (_nodeInfo != nodeInfo) {
+        [_nodeInfo.parent replaceChild:_nodeInfo withChild:nodeInfo];
         _nodeInfo = nodeInfo;
         self.title = nodeInfo.name;
     }
